@@ -1,0 +1,26 @@
+# ============================================================
+# render.yaml - Configuración para Render
+# ============================================================
+
+services:
+  - type: web
+    name: gamehub-php
+    env: php
+    buildCommand: composer install --no-dev --optimize-autoloader
+    startCommand: php -S 0.0.0.0:10000 -t .
+    envVars:
+      - key: RENDER
+        value: true
+      - key: DB_HOST
+        value: dpg-d936aiojs32c73boer5g-a
+      - key: DB_PORT
+        value: 5432
+      - key: DB_NAME
+        value: gamehub_t2m0
+      - key: DB_USER
+        value: gamehub_t2m0_user
+      - key: DB_PASS
+        value: KhbeB8dHES31FFX1NbAu00bz15TQWp7s
+      - key: FLASK_API_URL
+        value: https://tu-app-flask.railway.app/api/resena
+    plan: free
