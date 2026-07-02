@@ -1,8 +1,7 @@
 # ============================================================
-# Dockerfile para GameHub (PHP + PostgreSQL)
+# Dockerfile para GameHub (PHP + PostgreSQL) CON ERRORES ACTIVADOS
 # ============================================================
 
-# Usamos una imagen oficial de PHP con Apache
 FROM php:8.2-apache
 
 # Instalar extensiones necesarias para PostgreSQL
@@ -16,12 +15,13 @@ RUN a2enmod rewrite
 # Copiar todos los archivos del proyecto al contenedor
 COPY . /var/www/html/
 
-# --- Configuración de PHP para producción ---
-# Creamos un archivo php.ini personalizado dentro del contenedor
-RUN echo "display_errors = Off" > /usr/local/etc/php/conf.d/gamehub.ini \
+# --- Configuración de PHP para desarrollo (con errores visibles) ---
+RUN echo "display_errors = On" > /usr/local/etc/php/conf.d/gamehub.ini \
+    && echo "display_startup_errors = On" >> /usr/local/etc/php/conf.d/gamehub.ini \
+    && echo "error_reporting = E_ALL" >> /usr/local/etc/php/conf.d/gamehub.ini \
     && echo "date.timezone = America/Bogota" >> /usr/local/etc/php/conf.d/gamehub.ini \
     && echo "extension=pdo_pgsql" >> /usr/local/etc/php/conf.d/gamehub.ini \
     && echo "extension=pgsql" >> /usr/local/etc/php/conf.d/gamehub.ini
 
-# Exponer el puerto 80 (Apache por defecto)
+# Exponer el puerto 80
 EXPOSE 80
